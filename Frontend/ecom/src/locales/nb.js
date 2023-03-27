@@ -1,6 +1,6 @@
 export default{
   //Header
-  addNew: "Legg til nytt element",
+  addNew: "Ny annonse",
   messages: "Meldinger",
   cart: "Handlekurv",
   logIn: "Logg inn",
@@ -117,6 +117,7 @@ export default{
   categories: "Kategorier",
   addCategory: "Legg til kategori",
   title: "Tittel",
+  items: "Annonser",
   
   //Purchase
   thanksForPurchase: "TAKK FOR KJØPET",

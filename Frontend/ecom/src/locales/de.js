@@ -1,6 +1,6 @@
 export default{
     //Header
-    addNew: "Neues Element hinzufügen",
+    addNew: "Neues Artikel hinzufügen",
     messages: "Nachrichten",
     cart: "Warenkorb",
     logIn: "Anmelden",
@@ -80,7 +80,7 @@ export default{
     errorRegistrating: "Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut",
     
     //New Item
-    addNewItem: "Neues Element hinzufügen",
+    addNewItem: "Neues Artikel hinzufügen",
     currentPictures: "Aktuelle Bilder",
     uploadImages: "Bilder hochladen (maximal Anzahl von 10)",
     briefDescription: "Kurzbeschreibung",
@@ -118,6 +118,7 @@ export default{
     categories: "Kategorien",
     addCategory: "Kategorien hinzufügen",
     title: "Titel",
+    items: "Artikelen",
     
     //Purchase
     thanksForPurchase: "DANKE FÜR DEN KAUF",
