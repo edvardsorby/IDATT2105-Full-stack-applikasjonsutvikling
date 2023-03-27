@@ -117,6 +117,7 @@ export default{
     categories: "Categorías",
     addCategory: "Añadir categoría",
     title: "Título",
+    items: "Artículos",
     
     //Purchase
     thanksForPurchase: "GRACIAS POR TU COMPRA",

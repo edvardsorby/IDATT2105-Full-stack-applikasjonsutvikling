@@ -118,6 +118,7 @@ export default{
     categories: "Categories",
     addCategory: "Add Categories",
     title: "Title",
+    items: "Items",
 
     //Purchase
     thanksForPurchase: "THANK YOU FOR THE PURCHASE",
