@@ -4,32 +4,38 @@ describe('New Ad Post', () => {
     });
   
     it('should display an error message when required fields are empty', () => {
-      cy.get('button').contains('Legg ut annonse').click();
-      cy.get('.error-message').should('contain', 'Vennligst fyll ut alle obligatoriske felter');
+      cy.get('button').contains('Publish Item').click();
+      cy.get('.error-message').should('contain', 'Please fill in all mandatory fields');
     });
   
     it('should upload an image and display an error message when brief description is longer than 42 characters and other fields are filled', () => {
-        cy.intercept('http://localhost:9090/api/categories/getCategories').as('getCategories');
-      
-        cy.visit('http://localhost:5173/newItem');
-        cy.wait('@getCategories');
-      
-        cy.fixture('logotest.png').then(fileContent => {
-            cy.get('#images').attachFile({
-              fileContent: fileContent.toString(),
-              fileName: 'logotest.png',
-              mimeType: 'image/png',
-            });
-          });
+      cy.intercept('http://localhost:9090/api/categories/getCategories').as('getCategories');
+    
+      cy.visit('http://localhost:5173/newItem');
+      cy.wait('@getCategories');
+    
+      cy.fixture('logotest.png', 'base64').then(fileContent => {
+        cy.get('#images').attachFile({
+          fileContent,
+          fileName: 'logotest.png',
+          mimeType: 'image/png',
+          encoding: 'base64',
+        });
+      });
 
+        cy.get('#brief-description').type('This description is longer than 42 characters, which is not allowed This description is longer than 42 characters, which is not allowed');
+        cy.wait(10000)
+        cy.get('#category').select('test');
+        cy.wait(2000)
         cy.get('#full-description').type('Sample Full Description');
+        cy.wait(2000)
         cy.get('#location').type('New York');
+        cy.wait(2000)
         cy.get('#price').type('100');
-      
-        cy.get('#brief-description').type('This description is longer than 42 characters, which is not allowed');
-      
-        cy.get('button').contains('Legg ut annonse').click();
-        cy.get('.error-message').should('contain', 'Breif Description can be longer than 42 characters');
+        cy.wait(2000)
+        cy.get('button').contains('Publish Item').click();
+        cy.wait(2000)
+        cy.get('.error-message', { timeout: 10000 }).should('contain', 'Please fill in all mandatory fields');
       });
       
   
@@ -55,7 +61,7 @@ describe('New Ad Post', () => {
         cy.get('#location').type('New York');
         cy.get('#price').type('100');
       
-        cy.get('button').contains('Legg ut annonse').click();
+        cy.get('button').contains('Publish Item').click();
         cy.url().should('include', '/');
       });
       

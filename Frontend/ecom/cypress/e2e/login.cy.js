@@ -27,12 +27,12 @@ describe('User Login', () => {
       });
   
       cy.get('.submit button').click();
-      cy.get('.main-container p').should('contain', 'Logg in feilet. Har du rett email og passord?');
+      cy.get('.main-container p', { timeout: 10000 }).should('contain', 'Login failed. Do you have the correct email and password');
     });
   
     it('shows an error message when input fields are empty', () => {
       cy.get('.submit button').click();
-      cy.get('.main-container p').should('contain', 'Epost og password er nødvendige felt');
+      cy.get('.main-container p', { timeout: 10000 }).should('contain', 'Email and password are required fields');
     });
   
     it('navigates to the registration page', () => {

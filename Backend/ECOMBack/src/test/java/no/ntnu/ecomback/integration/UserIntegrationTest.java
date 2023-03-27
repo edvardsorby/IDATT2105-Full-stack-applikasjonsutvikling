@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.ntnu.ecomback.EcomBackApplication;
 import no.ntnu.ecomback.controller.UserController;
+import no.ntnu.ecomback.model.Message;
 import no.ntnu.ecomback.model.Role;
 import no.ntnu.ecomback.model.User;
 import no.ntnu.ecomback.repository.UserRepository;
@@ -17,6 +18,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
@@ -59,6 +61,8 @@ public class UserIntegrationTest {
         userRepository.save(user2);
         userRepository.save(user3);
     }
+
+    @DisplayName("Teardown of userRepository")
     @AfterEach
     public void teardown(){
        userRepository.deleteAll();
@@ -68,7 +72,7 @@ public class UserIntegrationTest {
     class TestGetUsers{
 
         @Test
-        @WithMockUser(username = "USER")
+        @WithMockUser(username = "ADMIN")
         @DisplayName("Testing the endpoint for retrieving all users")
         public void getUsers() throws Exception {
 
@@ -107,5 +111,35 @@ public class UserIntegrationTest {
         Assertions.assertEquals(newUser.getEmail(), retrievedUser.getEmail());
 
     }
+    @Test
+    @WithMockUser(username = "USER")
+    @DisplayName("Test deletion of user")
+    public void deleteUser() throws Exception {
+
+        mockMvc.perform((MockMvcRequestBuilders.delete("/api/users/deleteUser/karofm3@ntnu.no")
+                        .accept(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        System.out.println(userRepository.findAll());
+        Assertions.assertEquals(2,userRepository.findAll().size());
+    }
+    @Test
+    @WithMockUser(username = "USER")
+    @DisplayName("Test getting user")
+    public void getUser() throws Exception {
+        MvcResult result = mockMvc.perform(get("/api/users/login/user?email=karofm@ntnu.no")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String responseString = result.getResponse().getContentAsString();
+        User retrievedUser= objectMapper.readValue(responseString, new TypeReference<>() {
+        });
+        Assertions.assertEquals("karofm@ntnu.no",retrievedUser.getEmail());
+
+
+    }
+
 
 }

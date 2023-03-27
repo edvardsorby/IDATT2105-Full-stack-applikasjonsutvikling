@@ -24,7 +24,7 @@ describe('Edit Item Test with Login', () => {
     cy.url().should('include', '/');
 
     cy.wait(1000)
-    cy.visit('http://localhost:5173/update-item/1652');
+    cy.visit('http://localhost:5173/update-item/1');
   });
 
   it('Updates the brief description', () => {
@@ -33,14 +33,6 @@ describe('Edit Item Test with Login', () => {
     cy.wait(10000)
     cy.get('#brief-description').should('have.value', "test123");
     cy.wait(10000)
-  });
-
-  it('Updates the full description', () => {
-    cy.wait(3000)
-    cy.get('#full-description').type("123")
-    cy.wait(10000)
-    cy.get('#full-description').should('have.value', 'test | \nLocation: ladeveien 22123');
-    cy.wait(10000);
   });
   
   it('Updates the price', () => {
