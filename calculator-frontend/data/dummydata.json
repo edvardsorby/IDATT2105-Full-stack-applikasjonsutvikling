@@ -1,0 +1,13 @@
+{
+  "login": {
+    "status": "true"
+  },
+  "feedback": [
+    {
+      "name": "Edvard Sørby",
+      "email": "edvard.sorby@gmail.com",
+      "message": "Hallo",
+      "id": 1
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.calculator;
+package no.ntnu.idatt2105.calculator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

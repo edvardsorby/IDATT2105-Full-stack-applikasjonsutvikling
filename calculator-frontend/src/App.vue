@@ -1,85 +1,92 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import { useTokenStore } from './stores/token'
+import router from '@/router';
+
+
+const tokenStore = useTokenStore();
+
+function logOut() {
+  router.push("/")
+  tokenStore.loggedInUser = null;
+  tokenStore.jwtToken = null;
+  tokenStore.history = []
+  console.log("Logging out")
+}
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
+    <h1 v-if="!tokenStore.loggedInUser">Kalkulator</h1>
+    <nav v-if="tokenStore.loggedInUser">
+      <RouterLink to="/kalkulator">Kalkulator</RouterLink>
+      <RouterLink to="/kontaktskjema">Kontaktskjema</RouterLink>
+      <RouterLink to="/info">Info</RouterLink>
+    </nav>
+    <button v-if="tokenStore.loggedInUser" @click="logOut()" class="logInOut">Logg ut</button>
   </header>
 
+  <div id="line"></div>
   <RouterView />
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<style>
+html {
+  height: 100%;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+body {
+  background-image: linear-gradient(to bottom right, #222222, #555555);
+  background-size: cover;
 }
-
-nav {
-  width: 100%;
-  font-size: 12px;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+  color: #d1d1d1;
 }
 
 nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+  font-weight: bold;
+  color: #d1d1d1;
+  margin: 10px;
+  text-decoration: none;
 }
 
-nav a:first-of-type {
-  border: 0;
+nav a.router-link-exact-active {
+  color: #6fff5c;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+header button {
+  position: absolute;
+  right: 50px;
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+}
+#line {
+  height: 1px;
+  background-color: #6fff5c;
+  margin: 0px 20px 0px 20px;
+}
+.logInOut {
+  padding: 10px;
+  background-color: #6fff5c;
+  border-radius: 5px;
+  border: none;
+}
+.logInOut:hover {
+  cursor: pointer;
+  background-color: #ffffff;
+}
+h1 {
+  margin: 10px;
 }
 </style>
